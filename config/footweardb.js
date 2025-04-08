@@ -11,24 +11,26 @@ const sequelize = new Sequelize({
     max: 5,
     min: 0,
     idle: 10000
-  }
+  },
+  dialectOptions: {
+    connectTimeout: 10000, 
+  },
+  logging: false, 
 });
 
 // Test koneksi
 (async () => {
   try {
-    sequelize.authenticate()
-      .then(() => console.log('✅ Connected successfully!'))
-      .catch(err => {
-        console.error('❌ Connection failed:', err.message);
-        console.log('\nLangkah troubleshooting:');
-        console.log('1. Pastikan IP', process.env.YOUR_IP, 'diizinkan di Authorized Networks');
-        console.log('2. Coba koneksi via MySQL CLI:');
-        console.log(`   mysql -h 34.46.53.84 -u web-sepatu-111 -p`);
-        console.log('3. Jika masih gagal, gunakan Cloud SQL Proxy');
-      });
-  } catch (error) {
-    console.error('Unable to connect:', error);
+    await sequelize.authenticate();
+    console.log('✅ Connected successfully to MySQL!');
+  } catch (err) {
+    console.error('❌ Connection failed:', err.message);
+    console.log('\n🔍 Troubleshooting Steps:');
+    console.log('1. Pastikan IP Cloud Run diizinkan di Authorized Networks MySQL.');
+    console.log('2. Coba koneksi manual: mysql -h 34.46.53.84 -u web-sepatu-111 -p');
+    console.log('3. Jika pakai Cloud SQL, coba koneksi dengan Cloud SQL Proxy.');
+    console.log('4. Tes port dengan: nc -vz 34.46.53.84 3306');
+    console.log('5. Jika pakai VPC Connector, pastikan firewall memperbolehkan koneksi ke 3306.');
   }
 })();
 
