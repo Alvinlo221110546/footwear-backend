@@ -1,11 +1,14 @@
-FROM node:18
+FROM node:18-alpine
+
 WORKDIR /workspace
-
 COPY package*.json ./
-RUN npm install
-
+RUN npm install --only=production
 COPY . .
 
-EXPOSE 8080
+ENV NODE_ENV=production
+ENV PORT=8080
 
-CMD ["node", "server.js", "--port", "8080"]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD node healthcheck.js || exit 1
+
+CMD ["node", "server.js"]
