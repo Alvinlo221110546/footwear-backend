@@ -1,7 +1,7 @@
 import { sequelize, DataTypes } from "../config/footweardb.js";
 
 const Best = sequelize.define(
-    'Best',
+    'Bests',
     {
         id: {
             type: DataTypes.INTEGER,
