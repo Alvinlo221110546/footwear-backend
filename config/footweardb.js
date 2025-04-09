@@ -1,21 +1,27 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
 const sequelize = new Sequelize({
-  database: process.env.DB_NAME || 'footwear_db',
-  username: process.env.DB_USER || 'web-sepatu-111',
-  password: process.env.DB_PASS || 'P0qPrQoo0SLOsB',
-  host: process.env.DB_HOST || '34.46.53.84', 
+  database: 'footwear_db',
+  username: 'web-sepatu-111',
+  password: 'P0qPrQoo0SLOsB',
+  host: '34.46.53.84',
   dialect: 'mysql',
-  port: process.env.DB_PORT || 3306,
+  port: 3306,
   pool: {
     max: 5,
     min: 0,
     idle: 10000
   },
   dialectOptions: {
-    connectTimeout: 10000,
+    connectTimeout: 60000, 
+    socketTimeout: 60000, 
   },
-  logging: false,
+  retry: {
+    max: 3,
+    timeout: 30000,
+    match: [/ETIMEDOUT/, /ECONNRESET/, /ECONNREFUSED/]
+  },
+  logging: console.log 
 });
 
 // Test koneksi dengan error logging yang lebih detail
