@@ -4,7 +4,7 @@ const sequelize = new Sequelize({
   database: 'footwear_db',
   username: 'web-sepatu-111',
   password: 'P0qPrQoo0SLOsB',
-  host: '34.46.53.84',
+  host: '34.101.89.195',
   dialect: 'mysql',
   port: 3306,
   pool: {
