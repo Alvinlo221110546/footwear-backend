@@ -4,23 +4,16 @@ const sequelize = new Sequelize({
   database: 'footwear_db',
   username: 'web-sepatu-111',
   password: 'P0qPrQoo0SLOsB',
-  host: '34.101.89.195',
   dialect: 'mysql',
-  port: 3306,
+  dialectOptions: {
+    socketPath: '/cloudsql/subtle-proxy-454413-p0:asia-southeast2:web-sepatu-111'
+  },
   pool: {
     max: 5,
     min: 0,
-    idle: 10000,
+    idle: 10000
   },
-  dialectOptions: {
-    connectTimeout: 60000,
-  },
-  retry: {
-    max: 5,
-    timeout: 6000,
-    match: [/ETIMEDOUT/, /ECONNRESET/, /ECONNREFUSED/],
-  },
-  logging: (msg) => console.log('[Sequelize Log]', msg),
+  logging: console.log
 });
 
 // Test koneksi dengan error handling lengkap
