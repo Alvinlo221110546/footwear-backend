@@ -1,7 +1,7 @@
 import { sequelize, DataTypes } from "../config/footweardb.js";
 
 const Anak = sequelize.define(
-  'Anak',
+  'Anaks',
   {
     id: {
       type: DataTypes.INTEGER,
