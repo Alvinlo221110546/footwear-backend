@@ -14,11 +14,10 @@ const sequelize = new Sequelize({
   },
   dialectOptions: {
     connectTimeout: 60000, 
-    socketTimeout: 60000, 
   },
   retry: {
-    max: 3,
-    timeout: 30000,
+    max: 5,
+    timeout: 6000,
     match: [/ETIMEDOUT/, /ECONNRESET/, /ECONNREFUSED/]
   },
   logging: console.log 
@@ -45,14 +44,7 @@ const sequelize = new Sequelize({
       database: sequelize.config.database,
       username: sequelize.config.username
     });
-    
-    console.log('\n🔧 Troubleshooting Steps:');
-    console.log('1. Check network connectivity to host:', sequelize.config.host);
-    console.log('2. Verify credentials and permissions for user:', sequelize.config.username);
-    console.log('3. Check if MySQL is running on port:', sequelize.config.port);
-    console.log('4. Test with command:');
-    console.log(`   mysql -h ${sequelize.config.host} -u ${sequelize.config.username} -p${sequelize.config.password.replace(/./g, '*')} -P ${sequelize.config.port} ${sequelize.config.database}`);
-    
+        
     if (err.original) {
       console.error('\n⚠️ Original Error Details:');
       console.error('- Code:', err.original.code || 'N/A');
