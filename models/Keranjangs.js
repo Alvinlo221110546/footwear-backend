@@ -1,6 +1,6 @@
 import { sequelize, DataTypes } from "../config/footweardb.js";
 
-const Keranjangs = sequelize.define('keranjang-product', {
+const Keranjangs = sequelize.define('keranjang_product', {
   itemId: {
     type: DataTypes.STRING,
     allowNull: false,
