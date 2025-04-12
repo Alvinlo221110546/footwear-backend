@@ -19,21 +19,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-const corsOrigin = process.env.CORS_ORIGIN || 'https://footwear-frontend-9c5ba.web.app';
-
-app.use(cors({
-  origin: corsOrigin,
-  credentials: true,
-}));
-
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', corsOrigin);
-  res.header('Access-Control-Allow-Credentials', true);
+  const origin = process.env.CORS_ORIGIN || 'https://footwear-frontend-9c5ba.web.app';
+  
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  
   next();
 });
-
 
 app.use('/api', routes);
 
